@@ -131,7 +131,7 @@ class RenderTests(unittest.TestCase):
        The file is automatically deleted if an exception occurs
     """
     file = tempfile.NamedTemporaryFile(delete=False)
-    path = file.name
+    path = file.name.replace('\\', '/')
     try:
       file.write(template)
       file.close()
