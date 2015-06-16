@@ -66,6 +66,8 @@ class _InputScanner(object):
       value = self._next()
     return value
 
+  def next(self):
+      return self.__next__()
 
   def _next(self):
     if not self.done_scanning():

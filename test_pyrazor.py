@@ -6,7 +6,7 @@
 
 import unittest
 from razorview import pyRazor
-import html
+import cgi
 import tempfile
 import textwrap
 import os
@@ -52,9 +52,9 @@ class RenderTests(unittest.TestCase):
     model = test()
     model.a = "<html>"
     self.assertEquals("<html>", pyRazor.Render("@!model.a", model))
-    self.assertEquals(html.escape("<html>"), pyRazor.Render("@model.a", model))
+    self.assertEquals(cgi.escape("<html>"), pyRazor.Render("@model.a", model))
     self.assertEquals("<html>", pyRazor.Render("@!(model.a)", model))
-    self.assertEquals(html.escape("<html>"), pyRazor.Render("@(model.a)", model))
+    self.assertEquals(cgi.escape("<html>"), pyRazor.Render("@(model.a)", model))
 
   def testHtml(self):
     html = textwrap.dedent("""\
@@ -80,7 +80,7 @@ class RenderTests(unittest.TestCase):
     self.assertEquals("<html>\n</html>", pyRazor.Render("<html>\n@#A whole line is commented!\n</html>"))
 
   def testHelperFunction(self):
-    self.assertEquals("viewtext\n<s>helper</s>\nviewtext", pyRazor.Render("@helper test(name):\n\t<s>@name</s>\nviewtext\n@test('helper')\nviewtext"))
+    self.assertEquals(u"viewtext\n\t<s>helper</s>\nviewtext", pyRazor.Render("@helper test(name):\n\t<s>@name</s>\nviewtext\n@test('helper')\nviewtext"))
 
   def testMultilineIf(self):
     """Tests that an if statement works"""
@@ -133,7 +133,7 @@ class RenderTests(unittest.TestCase):
     file = tempfile.NamedTemporaryFile(delete=False)
     path = file.name.replace('\\', '/')
     try:
-      file.write(bytes(template , 'UTF-8'))
+      file.write(template)
       file.close()
       return path
     except:
