@@ -5,11 +5,12 @@
 """
 
 import unittest
-from razorview import pyrazor
 import cgi
 import tempfile
 import textwrap
 import os
+
+from razorview import pyrazor
 
 
 class RenderTests(unittest.TestCase):

@@ -1,7 +1,8 @@
 # Alex Lusco
+import re
+
 import sexylexer
 from scopestack import ScopeStack
-import re
 
 
 class Token:

@@ -1,6 +1,7 @@
 # Alex Lusco
 
 import unittest
+
 from scopestack import ScopeStack
 
 STEP = "     "

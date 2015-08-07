@@ -7,6 +7,7 @@ import hashlib
 import os
 import os.path
 from io import StringIO
+
 import lex
 import cgi
 
