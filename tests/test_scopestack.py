@@ -25,7 +25,7 @@ class ScopeStackTest(unittest.TestCase):
 
     # Push a callback onto stack
     self.scope.handleIndentation("")
-    self.scope.indentstack.markScope(callback)
+    self.scope.indentstack.mark_scope(callback)
 
     # Calls the stack with a deeper indent
     self.scope.handleIndentation(STEP)

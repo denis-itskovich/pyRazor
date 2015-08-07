@@ -1,4 +1,4 @@
-@view.wrap('sampleView/Layout.pyhtml')
+@view.wrap('layout.pyhtml')
 <h1>
     @model
 </h1>
