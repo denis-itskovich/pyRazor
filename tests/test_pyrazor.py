@@ -83,7 +83,7 @@ class RenderTests(unittest.TestCase):
 
     def testHelperFunction(self):
         self.assertEquals(u"viewtext\n\t<s>helper</s>\nviewtext",
-                          pyrazor.render("@helper test(name):\n\t<s>@name</s>\nviewtext\n@test('helper')\nviewtext"))
+                          pyrazor.render("@def test(name):\n\t<s>@name</s>\nviewtext\n@test('helper')\nviewtext"))
 
     def testMultilineIf(self):
         """Tests that an if statement works"""

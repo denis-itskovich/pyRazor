@@ -11,20 +11,20 @@ class IndentStack(object):
   """
 
     def __init__(self, nowhitespace=False):
-        self._nowhitespace = nowhitespace
+        self._no_whitespace = nowhitespace
         # Indentation Tracking
         self.stack = []
         self.indentation = 0
         # Handler Tracking
         self.handlers = {}
         # Mark
-        self.markHandler = None
+        self.mark_handler = None
         self.mark = False
 
     def mark_scope(self, handler=None):
         """Marks the next indent level as a scope boundary"""
         self.mark = True
-        self.markHandler = handler
+        self.mark_handler = handler
 
     def get_scope_indentation(self):
         """Returns the level of indentation for the this scope"""
@@ -34,7 +34,7 @@ class IndentStack(object):
 
     def get_relative_indentation(self):
         """Returns the relative indent of this line relative to its scope"""
-        if not self._nowhitespace:
+        if not self._no_whitespace:
             return self.indentation - self.get_scope_indentation()
         else:
             return 0
@@ -64,10 +64,10 @@ class IndentStack(object):
         # Check if we need to push this indent on the stack
         if il > self.get_scope_indentation()[1]:
             self.stack.append((indent, il))
-            self.handlers[il] = self.markHandler
-        elif self.markHandler is not None:
+            self.handlers[il] = self.mark_handler
+        elif self.mark_handler is not None:
             # This was a case where a multiline token has no
-            self.markHandler()
+            self.mark_handler()
 
 
 class ScopeStack(object):
@@ -81,19 +81,19 @@ class ScopeStack(object):
         self.scope = 0
         self.indentstack = IndentStack(nowhitespace)
 
-    def getScope(self):
+    def get_scope(self):
         """Returns the current scope depth"""
         return self.scope
 
-    def enterScope(self):
+    def enter_scope(self):
         """Enters a new scope level"""
 
-        def _leaveScope():
+        def _leave_scope():
             self.scope -= 1
 
         self.scope += 1
-        self.indentstack.mark_scope(_leaveScope)
+        self.indentstack.mark_scope(_leave_scope)
 
-    def handleIndentation(self, indent):
+    def handle_indentation(self, indent):
         """Handles indention level"""
         self.indentstack.handle_indentation(indent)

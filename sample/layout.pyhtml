@@ -2,8 +2,8 @@
     <head>
         <title>@model</title>
     </head>
-    <body>@#
-@helper test():
+    <body>
+@def test():
           @:
             a = 123
             b = 321
@@ -14,7 +14,7 @@
                     a = '111'
                     b = '222'
 
-            return a+b#@
+            return a+b
         <ul>
         @for i in [1,2,3,4,5]:
             @:
@@ -30,7 +30,7 @@
                         <text>123</text>
                 </li>
         </ul>
-        @#test()
+        @test()
         <p>@model</p>
         @view.body()
     </body>

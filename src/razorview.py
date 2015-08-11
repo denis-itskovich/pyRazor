@@ -23,7 +23,7 @@ class View(object):
         self.__layoutModel = None
         self._value = ''
         self._body = ''
-        self._Section = dict()
+        self._sections = dict()
         self.renderer = types.MethodType(self.parse(text, ignore_whitespace), self)
 
     def render(self, model=None):
@@ -38,11 +38,11 @@ class View(object):
     def render_to(self, io, model=None):
         self.model = model
         self.io = io
-        self.renderer(self.io, model)
+        self.renderer(io, model)
 
     # Methods below here are expected to be called from within the template
     def tmpl(self, file, submodel=None):
-        chModel = submodel if submodel is not None else self.model
+        chModel = submodel or self.model
         view = self.razor.render_file(file, chModel, self.ignore_whitespace)
         self.io.write(view)
 
@@ -174,7 +174,7 @@ class ViewBuilder(object):
             self.write_expression(token[1])
         elif token[0] == lex.Token.NEWLINE:
             self.try_print_newline()
-            self.buffer.set_scope(self.scope.getScope() + 1)
+            self.buffer.set_scope(self.scope.get_scope() + 1)
 
         self.lasttoken = token
 
@@ -192,8 +192,8 @@ class ViewBuilder(object):
             return
 
         # Anywhere we writecode does not need the new line character
-        no_new_line = (lex.Token.CODE, lex.Token.MULTILINE, lex.Token.ONELINE)
-        up_scope = (lex.Token.EXPRESSION, lex.Token.PARENEXPRESSION)
+        no_new_line = {lex.Token.CODE, lex.Token.MULTILINE, lex.Token.ONELINE}
+        up_scope = {lex.Token.EXPRESSION, lex.Token.PARENEXPRESSION}
         if not self.lasttoken[0] in no_new_line:
             if self.lasttoken[0] in up_scope:
                 self.buffer.scope += 1

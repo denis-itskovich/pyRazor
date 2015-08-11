@@ -156,10 +156,10 @@ class RazorLexer(object):
             scanner._position += 1
             return None
         else:
-            # Convert helper syntax to a real python function
-            if token.lower().startswith("@helper"):
-                token = token.lower().replace("helper", "def", 1)
-            self.scope.enterScope()
+            # # Convert helper syntax to a real python function
+            # if token.lower().startswith("@helper"):
+            #     token = token.lower().replace("helper", "def", 1)
+            self.scope.enter_scope()
             return token.lstrip('@')
 
     def multiline_end(self, scanner, token):
@@ -211,7 +211,7 @@ class RazorLexer(object):
         self.NewLine = True
         nline = token.index('\n') + 1
         token = token[nline:]
-        self.scope.handleIndentation(token)
+        self.scope.handle_indentation(token)
         if self.ignore_whitespace:
             return ""
         return token[self.scope.indentstack.get_scope_indentation()[1]:]

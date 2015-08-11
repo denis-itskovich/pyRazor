@@ -39,9 +39,9 @@ class UnknownTokenError(TokenError):
     pass
 
 
-class ScannerMode:
-    Text = "TEXT"
-    CODE = "CODE"
+class ScannerMode(object):
+    Text = 1
+    CODE = 2
 
 
 class _InputScanner(object):
@@ -132,6 +132,7 @@ class Lexer(object):
         self.case_sensitive = case_sensitive
         parts = []
         mparts = []
+
         for name, rule in rules:
             if not isinstance(rule, str):
                 rule, callback = rule
